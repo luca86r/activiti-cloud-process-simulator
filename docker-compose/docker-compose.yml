@@ -45,9 +45,9 @@ services:
     depends_on:
       - nginx
 
-  example-runtime-bundle:
-    container_name: example-runtime-bundle
-    image: activiti/example-runtime-bundle:${VERSION}
+  activiti-cloud-process-simulator-rb:
+    container_name: activiti-cloud-process-simulator-rb
+    image: activiti-cloud-process-simulator-rb:latest
     environment:
       # JAVA_OPTS: "-Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8000,suspend=n -noverify"
       SPRING_JMX_ENABLED: "false"

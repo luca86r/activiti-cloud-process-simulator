@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.4</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<groupId>it.intesys</groupId>
+	<artifactId>activiti-cloud-process-simulator-rb</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<name>activiti-cloud-process-simulator-rb</name>
+	<description> Activiti Cloud - Process Simulator - Runtime Bundle</description>
+
+	<properties>
+		<java.version>11</java.version>
+		<activiti-cloud.version>7.5.1</activiti-cloud.version>
+		<skip.jib-package.execution>false</skip.jib-package.execution>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.activiti.cloud</groupId>
+				<artifactId>activiti-cloud-runtime-bundle-dependencies</artifactId>
+				<version>${activiti-cloud.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>org.activiti.cloud</groupId>
+				<artifactId>activiti-cloud-messages-dependencies</artifactId>
+				<version>${activiti-cloud.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.activiti.cloud</groupId>
+			<artifactId>activiti-cloud-starter-runtime-bundle</artifactId>
+			<version>${activiti-cloud.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.activiti.cloud</groupId>
+			<artifactId>activiti-cloud-starter-messages-jdbc</artifactId>
+			<version>${activiti-cloud.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.activiti.cloud</groupId>
+			<artifactId>activiti-cloud-runtime-bundle-dependencies</artifactId>
+			<version>${activiti-cloud.version}</version>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<!-- Alfresco Maven Repositories -->
+	<repositories>
+		<repository>
+			<id>activiti-releases</id>
+			<url>https://artifacts.alfresco.com/nexus/content/repositories/activiti-releases</url>
+		</repository>
+	</repositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>2.1.0</version>
+				<executions>
+					<execution>
+						<id>jib-package</id>
+						<phase>package</phase>
+						<goals>
+							<goal>dockerBuild</goal>
+						</goals>
+						<configuration>
+							<skip>${skip.jib-package.execution}</skip>
+						</configuration>
+					</execution>
+					<execution>
+						<id>jib-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<from>
+						<image>adoptopenjdk/openjdk11:jdk-11.0.2.9-slim</image>
+					</from>
+					<to>
+						<image>${project.artifactId}:${project.version}</image>
+						<tags>
+							<tag>develop</tag>
+							<tag>latest</tag>
+						</tags>
+					</to>
+					<container>
+						<environment>
+							<port>8080</port>
+						</environment>
+						<ports>
+							<port>8080</port>
+						</ports>
+						<workingDirectory>/opt</workingDirectory>
+					</container>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

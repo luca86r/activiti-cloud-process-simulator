@@ -353,7 +353,7 @@
     } ],
     "disableableCredentialTypes" : [ "password" ],
     "requiredActions" : [ ],
-    "realmRoles" : [ "offline_access", "uma_authorization", "ACTIVITI_ADMIN" ],
+    "realmRoles" : [ "offline_access", "uma_authorization", "ACTIVITI_ADMIN", "ACTIVITI_USER" ],
     "clientRoles" : {
       "realm-management" : [ "manage-users", "manage-clients", "manage-authorization", "manage-events", "manage-realm", "create-client", "impersonation", "realm-admin" ],
       "broker" : [ "read-token" ],

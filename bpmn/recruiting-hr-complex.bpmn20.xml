@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:activiti="http://activiti.org/bpmn" id="model-fbd420df-1d45-45ad-a15a-f49346de60d3" name="recruiting-hr" targetNamespace="http://bpmn.io/schema/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
-  <bpmn2:process id="Process_Z84wXlDXQ" name="recruiting-hr" isExecutable="true">
+  <bpmn2:process id="recruiting-hr" name="recruiting-hr" isExecutable="true">
     <bpmn2:documentation />
     <bpmn2:startEvent id="Event_1">
       <bpmn2:outgoing>SequenceFlow_0duuzll</bpmn2:outgoing>

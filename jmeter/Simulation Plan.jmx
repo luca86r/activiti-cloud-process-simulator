@@ -10,7 +10,7 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="cluster_ip" elementType="Argument">
             <stringProp name="Argument.name">cluster_ip</stringProp>
-            <stringProp name="Argument.value">172.31.82.17</stringProp>
+            <stringProp name="Argument.value">172.31.92.218</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="protocol" elementType="Argument">
@@ -35,7 +35,7 @@
           </elementProp>
           <elementProp name="processDefinitionKey" elementType="Argument">
             <stringProp name="Argument.name">processDefinitionKey</stringProp>
-            <stringProp name="Argument.value">Process_Z84wXlDXQ</stringProp>
+            <stringProp name="Argument.value">recruiting-hr</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -312,7 +312,7 @@
             <stringProp name="1216985755">password</stringProp>
           </collectionProp>
           <collectionProp name="UserParameters.thread_values">
-            <collectionProp name="-1363900253">
+            <collectionProp name="1081571311">
               <stringProp name="-307347054">hr_user_1</stringProp>
               <stringProp name="1216985755">password</stringProp>
             </collectionProp>

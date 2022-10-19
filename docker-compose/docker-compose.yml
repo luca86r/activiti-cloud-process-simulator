@@ -155,8 +155,18 @@ services:
       ACTIVITI_CLOUD_MODELING_URL:  localhost:8080
       SERVER_SERVLET_CONTEXT_PATH:  /modeling-service
 
+  grafana:
+      container_name: grafana
+      image: grafana/grafana-oss:9.2.1
+      volumes:
+         - grafana-storage:/var/lib/grafana
+      environment:
+         GF_SERVER_ROOT_URL: "http://${DOCKER_IP}/grafana"
+         GF_SERVER_SERVE_FROM_SUB_PATH: true
+
 volumes:
   rabbitmq-data:
   pgdata:
+  grafana-storage:
 
     

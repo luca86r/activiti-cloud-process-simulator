@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:activiti="http://activiti.org/bpmn" id="model-fbd420df-1d45-45ad-a15a-f49346de60d3" name="recruiting-hr" targetNamespace="http://bpmn.io/schema/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
-  <bpmn2:process id="recruiting-hr" name="recruiting-hr" isExecutable="true">
+  <bpmn2:process id="Process_IDVDiFhWr" name="recruiting-hr" isExecutable="true">
     <bpmn2:documentation />
     <bpmn2:startEvent id="Event_1">
       <bpmn2:outgoing>SequenceFlow_0duuzll</bpmn2:outgoing>
@@ -22,14 +22,14 @@
       <bpmn2:incoming>SequenceFlow_1yqzhn0</bpmn2:incoming>
     </bpmn2:endEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_02n2oyn" name="no" sourceRef="ExclusiveGateway_198f0ny" targetRef="EndEvent_1r2tq9l">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${interview_hr_passed=="no"}</bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${interview_hr_passed=="no"}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:userTask id="Task_0098cw3" name="HR Manager - Review" activiti:candidateUsers="hr_manager">
       <bpmn2:incoming>SequenceFlow_0djappl</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_1nfxz5d</bpmn2:outgoing>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_0djappl" name="yes" sourceRef="ExclusiveGateway_198f0ny" targetRef="Task_0098cw3">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${interview_hr_passed=="yes"}</bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${interview_hr_passed=="yes"}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:exclusiveGateway id="ExclusiveGateway_0p7mfg9" name="Is review passed?">
       <bpmn2:incoming>SequenceFlow_1nfxz5d</bpmn2:incoming>
@@ -38,14 +38,14 @@
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_1nfxz5d" sourceRef="Task_0098cw3" targetRef="ExclusiveGateway_0p7mfg9" />
     <bpmn2:sequenceFlow id="SequenceFlow_1mhpcl9" name="yes" sourceRef="ExclusiveGateway_0p7mfg9" targetRef="EndEvent_1r2tq9l">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${review_hr_manager_passed=="yes"}</bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${review_hr_manager_passed=="yes"}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_1yqzhn0" name="no" sourceRef="ExclusiveGateway_0p7mfg9" targetRef="EndEvent_1r2tq9l">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${review_hr_manager_passed=="no"}</bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${review_hr_manager_passed=="no"}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
   </bpmn2:process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="recruiting-hr">
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Process_IDVDiFhWr">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_IDVDiFhWr" bpmnElement="Process_IDVDiFhWr">
       <bpmndi:BPMNShape id="_BPMNShape_Event_2" bpmnElement="Event_1">
         <dc:Bounds x="292" y="240" width="36" height="36" />
       </bpmndi:BPMNShape>

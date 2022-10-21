@@ -10,7 +10,7 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="cluster_ip" elementType="Argument">
             <stringProp name="Argument.name">cluster_ip</stringProp>
-            <stringProp name="Argument.value">172.31.84.134</stringProp>
+            <stringProp name="Argument.value">${__P(cluster_ip, 172.31.81.224)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="protocol" elementType="Argument">
@@ -31,11 +31,6 @@
           <elementProp name="keycloak_client_id" elementType="Argument">
             <stringProp name="Argument.name">keycloak_client_id</stringProp>
             <stringProp name="Argument.value">activiti</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="processDefinitionKey" elementType="Argument">
-            <stringProp name="Argument.name">processDefinitionKey</stringProp>
-            <stringProp name="Argument.value">Process_IDVDiFhWr</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="hr_user_1_enable" elementType="Argument">
@@ -66,6 +61,11 @@
           <elementProp name="hr_manager_enable" elementType="Argument">
             <stringProp name="Argument.name">hr_manager_enable</stringProp>
             <stringProp name="Argument.value">${__P(hr_manager_enable, true)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="proc_type" elementType="Argument">
+            <stringProp name="Argument.name">proc_type</stringProp>
+            <stringProp name="Argument.value">${__P(proc_type, simple)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -224,7 +224,16 @@ vars.put(&quot;review_hr_manager_passed&quot;, rand == 0 ? &quot;yes&quot; : &qu
 rand = ${__Random(0,1,)};
 vars.put(&quot;interview_hr_passed&quot;, rand == 0 ? &quot;yes&quot; : &quot;no&quot;);
 rand = ${__Random(0,1,)};
-vars.put(&quot;technical_test_passed&quot;, rand == 0 ? &quot;yes&quot; : &quot;no&quot;);</stringProp>
+vars.put(&quot;technical_test_passed&quot;, rand == 0 ? &quot;yes&quot; : &quot;no&quot;);
+
+if (&quot;${proc_type}&quot; == &quot;simple&quot;) {
+	vars.put(&quot;processDefinitionKey&quot;, &quot;Process_recruitinghrsimple&quot;);
+}
+else {
+	vars.put(&quot;processDefinitionKey&quot;, &quot;Process_recruitinghrcomplex&quot;);	
+}
+
+</stringProp>
         </BeanShellPreProcessor>
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request - Start process" enabled="true">
@@ -302,7 +311,7 @@ vars.put(&quot;technical_test_passed&quot;, rand == 0 ? &quot;yes&quot; : &quot;
               </elementProp>
               <elementProp name="size" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">100</stringProp>
+                <stringProp name="Argument.value">${task_page_size}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">size</stringProp>
@@ -343,7 +352,7 @@ vars.put(&quot;technical_test_passed&quot;, rand == 0 ? &quot;yes&quot; : &quot;
           <hashTree/>
           <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
             <stringProp name="JSONPostProcessor.referenceNames">task_id</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">_embedded.tasks[${__Random(1,10,)}].id</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">_embedded.tasks[${task_select_position}].id</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
           </JSONPostProcessor>
           <hashTree/>
@@ -513,7 +522,7 @@ vars.put(&quot;technical_test_passed&quot;, rand == 0 ? &quot;yes&quot; : &quot;
         <TestAction guiclass="TestActionGui" testclass="TestAction" testname="Flow Control Action" enabled="true">
           <intProp name="ActionProcessor.action">1</intProp>
           <intProp name="ActionProcessor.target">0</intProp>
-          <stringProp name="ActionProcessor.duration">${__Random(50,200,)}</stringProp>
+          <stringProp name="ActionProcessor.duration">${__Random(1000,1000,)}</stringProp>
         </TestAction>
         <hashTree/>
         <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
@@ -570,7 +579,7 @@ vars.put(&quot;technical_test_passed&quot;, rand == 0 ? &quot;yes&quot; : &quot;
         <TestAction guiclass="TestActionGui" testclass="TestAction" testname="Flow Control Action" enabled="true">
           <intProp name="ActionProcessor.action">1</intProp>
           <intProp name="ActionProcessor.target">0</intProp>
-          <stringProp name="ActionProcessor.duration">${__Random(100,400,)}</stringProp>
+          <stringProp name="ActionProcessor.duration">${__Random(2000,2000,)}</stringProp>
         </TestAction>
         <hashTree/>
         <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller" enabled="true">
@@ -589,11 +598,15 @@ vars.put(&quot;technical_test_passed&quot;, rand == 0 ? &quot;yes&quot; : &quot;
             <collectionProp name="UserParameters.names">
               <stringProp name="-265713450">username</stringProp>
               <stringProp name="1216985755">password</stringProp>
+              <stringProp name="1148732791">task_page_size</stringProp>
+              <stringProp name="917262930">task_select_position</stringProp>
             </collectionProp>
             <collectionProp name="UserParameters.thread_values">
-              <collectionProp name="1081571311">
+              <collectionProp name="10608055">
                 <stringProp name="-307347054">hr_user_1</stringProp>
                 <stringProp name="1216985755">password</stringProp>
+                <stringProp name="51">3</stringProp>
+                <stringProp name="48">0</stringProp>
               </collectionProp>
             </collectionProp>
             <boolProp name="UserParameters.per_iteration">false</boolProp>
@@ -634,7 +647,7 @@ vars.put(&quot;technical_test_passed&quot;, rand == 0 ? &quot;yes&quot; : &quot;
         <TestAction guiclass="TestActionGui" testclass="TestAction" testname="Flow Control Action" enabled="true">
           <intProp name="ActionProcessor.action">1</intProp>
           <intProp name="ActionProcessor.target">0</intProp>
-          <stringProp name="ActionProcessor.duration">${__Random(100,400,)}</stringProp>
+          <stringProp name="ActionProcessor.duration">${__Random(2000,2000,)}</stringProp>
         </TestAction>
         <hashTree/>
         <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller" enabled="true">
@@ -653,11 +666,15 @@ vars.put(&quot;technical_test_passed&quot;, rand == 0 ? &quot;yes&quot; : &quot;
             <collectionProp name="UserParameters.names">
               <stringProp name="-265713450">username</stringProp>
               <stringProp name="1216985755">password</stringProp>
+              <stringProp name="1148732791">task_page_size</stringProp>
+              <stringProp name="917262930">task_select_position</stringProp>
             </collectionProp>
             <collectionProp name="UserParameters.thread_values">
-              <collectionProp name="1081570195">
+              <collectionProp name="9535580">
                 <stringProp name="-307347053">hr_user_2</stringProp>
                 <stringProp name="1216985755">password</stringProp>
+                <stringProp name="51">3</stringProp>
+                <stringProp name="49">1</stringProp>
               </collectionProp>
             </collectionProp>
             <boolProp name="UserParameters.per_iteration">false</boolProp>
@@ -698,7 +715,7 @@ vars.put(&quot;technical_test_passed&quot;, rand == 0 ? &quot;yes&quot; : &quot;
         <TestAction guiclass="TestActionGui" testclass="TestAction" testname="Flow Control Action" enabled="true">
           <intProp name="ActionProcessor.action">1</intProp>
           <intProp name="ActionProcessor.target">0</intProp>
-          <stringProp name="ActionProcessor.duration">${__Random(100,400,)}</stringProp>
+          <stringProp name="ActionProcessor.duration">${__Random(2000,2000,)}</stringProp>
         </TestAction>
         <hashTree/>
         <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller" enabled="true">
@@ -717,11 +734,15 @@ vars.put(&quot;technical_test_passed&quot;, rand == 0 ? &quot;yes&quot; : &quot;
             <collectionProp name="UserParameters.names">
               <stringProp name="-265713450">username</stringProp>
               <stringProp name="1216985755">password</stringProp>
+              <stringProp name="1148732791">task_page_size</stringProp>
+              <stringProp name="917262930">task_select_position</stringProp>
             </collectionProp>
             <collectionProp name="UserParameters.thread_values">
-              <collectionProp name="1081569079">
+              <collectionProp name="8463105">
                 <stringProp name="-307347052">hr_user_3</stringProp>
                 <stringProp name="1216985755">password</stringProp>
+                <stringProp name="51">3</stringProp>
+                <stringProp name="50">2</stringProp>
               </collectionProp>
             </collectionProp>
             <boolProp name="UserParameters.per_iteration">false</boolProp>
@@ -762,7 +783,7 @@ vars.put(&quot;technical_test_passed&quot;, rand == 0 ? &quot;yes&quot; : &quot;
         <TestAction guiclass="TestActionGui" testclass="TestAction" testname="Flow Control Action" enabled="true">
           <intProp name="ActionProcessor.action">1</intProp>
           <intProp name="ActionProcessor.target">0</intProp>
-          <stringProp name="ActionProcessor.duration">${__Random(100,400,)}</stringProp>
+          <stringProp name="ActionProcessor.duration">${__Random(1000,1000,)}</stringProp>
         </TestAction>
         <hashTree/>
         <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller" enabled="true">
@@ -781,11 +802,15 @@ vars.put(&quot;technical_test_passed&quot;, rand == 0 ? &quot;yes&quot; : &quot;
             <collectionProp name="UserParameters.names">
               <stringProp name="-265713450">username</stringProp>
               <stringProp name="1216985755">password</stringProp>
+              <stringProp name="1148732791">task_page_size</stringProp>
+              <stringProp name="917262930">task_select_position</stringProp>
             </collectionProp>
             <collectionProp name="UserParameters.thread_values">
-              <collectionProp name="-1284887723">
+              <collectionProp name="-2118740224">
                 <stringProp name="-769198458">tech_user_1</stringProp>
                 <stringProp name="1216985755">password</stringProp>
+                <stringProp name="50">2</stringProp>
+                <stringProp name="48">0</stringProp>
               </collectionProp>
             </collectionProp>
             <boolProp name="UserParameters.per_iteration">false</boolProp>
@@ -826,7 +851,7 @@ vars.put(&quot;technical_test_passed&quot;, rand == 0 ? &quot;yes&quot; : &quot;
         <TestAction guiclass="TestActionGui" testclass="TestAction" testname="Flow Control Action" enabled="true">
           <intProp name="ActionProcessor.action">1</intProp>
           <intProp name="ActionProcessor.target">0</intProp>
-          <stringProp name="ActionProcessor.duration">${__Random(100,400,)}</stringProp>
+          <stringProp name="ActionProcessor.duration">${__Random(1000,1000,)}</stringProp>
         </TestAction>
         <hashTree/>
         <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller" enabled="true">
@@ -845,11 +870,15 @@ vars.put(&quot;technical_test_passed&quot;, rand == 0 ? &quot;yes&quot; : &quot;
             <collectionProp name="UserParameters.names">
               <stringProp name="-265713450">username</stringProp>
               <stringProp name="1216985755">password</stringProp>
+              <stringProp name="1148732791">task_page_size</stringProp>
+              <stringProp name="917262930">task_select_position</stringProp>
             </collectionProp>
             <collectionProp name="UserParameters.thread_values">
-              <collectionProp name="-1284888839">
+              <collectionProp name="-2119812662">
                 <stringProp name="-769198457">tech_user_2</stringProp>
                 <stringProp name="1216985755">password</stringProp>
+                <stringProp name="50">2</stringProp>
+                <stringProp name="49">1</stringProp>
               </collectionProp>
             </collectionProp>
             <boolProp name="UserParameters.per_iteration">false</boolProp>
@@ -890,7 +919,7 @@ vars.put(&quot;technical_test_passed&quot;, rand == 0 ? &quot;yes&quot; : &quot;
         <TestAction guiclass="TestActionGui" testclass="TestAction" testname="Flow Control Action" enabled="true">
           <intProp name="ActionProcessor.action">1</intProp>
           <intProp name="ActionProcessor.target">0</intProp>
-          <stringProp name="ActionProcessor.duration">${__Random(100,400,)}</stringProp>
+          <stringProp name="ActionProcessor.duration">${__Random(500,500,)}</stringProp>
         </TestAction>
         <hashTree/>
         <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller" enabled="true">
@@ -909,11 +938,15 @@ vars.put(&quot;technical_test_passed&quot;, rand == 0 ? &quot;yes&quot; : &quot;
             <collectionProp name="UserParameters.names">
               <stringProp name="-265713450">username</stringProp>
               <stringProp name="1216985755">password</stringProp>
+              <stringProp name="1148732791">task_page_size</stringProp>
+              <stringProp name="917262930">task_select_position</stringProp>
             </collectionProp>
             <collectionProp name="UserParameters.thread_values">
-              <collectionProp name="1721420642">
+              <collectionProp name="725465375">
                 <stringProp name="44571000">hr_manager</stringProp>
                 <stringProp name="1216985755">password</stringProp>
+                <stringProp name="49">1</stringProp>
+                <stringProp name="48">0</stringProp>
               </collectionProp>
             </collectionProp>
             <boolProp name="UserParameters.per_iteration">false</boolProp>

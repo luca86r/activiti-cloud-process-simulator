@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:activiti="http://activiti.org/bpmn" id="model-fbd420df-1d45-45ad-a15a-f49346de60d3" name="recruiting-hr" targetNamespace="http://bpmn.io/schema/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
-  <bpmn2:process id="Process_IDVDiFhWr" name="recruiting-hr" isExecutable="true">
+  <bpmn2:process id="Process_recruitinghrsimple" name="recruiting-hr" isExecutable="true">
     <bpmn2:documentation />
     <bpmn2:startEvent id="Event_1">
       <bpmn2:outgoing>SequenceFlow_0duuzll</bpmn2:outgoing>
@@ -44,8 +44,8 @@
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${review_hr_manager_passed=="no"}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
   </bpmn2:process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_Process_IDVDiFhWr">
-    <bpmndi:BPMNPlane id="BPMNPlane_Process_IDVDiFhWr" bpmnElement="Process_IDVDiFhWr">
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Process_recruitinghrsimple">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_recruitinghrsimple" bpmnElement="Process_recruitinghrsimple">
       <bpmndi:BPMNShape id="_BPMNShape_Event_2" bpmnElement="Event_1">
         <dc:Bounds x="292" y="240" width="36" height="36" />
       </bpmndi:BPMNShape>

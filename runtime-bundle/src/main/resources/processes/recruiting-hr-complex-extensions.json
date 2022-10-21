@@ -1,0 +1,51 @@
+{
+    "id": "process-66c06e0b-5337-4e84-a28a-1c3e62de4ae5",
+    "type": "PROCESS",
+    "name": "recruiting-hr",
+    "extensions":
+    {
+        "Process_recruitinghrcomplex":
+        {
+            "constants":
+            {},
+            "mappings":
+            {},
+            "properties":
+            {
+                "fc73ef07-e9b1-4260-8c09-f72247d36eea":
+                {
+                    "id": "fc73ef07-e9b1-4260-8c09-f72247d36eea",
+                    "name": "interview_hr_passed",
+                    "type": "string",
+                    "value": "",
+                    "required": false
+                },
+                "aabfe453-b001-44f2-a13c-b20aa8669078":
+                {
+                    "id": "aabfe453-b001-44f2-a13c-b20aa8669078",
+                    "name": "review_hr_manager_passed",
+                    "type": "string",
+                    "value": "",
+                    "required": false
+                },
+                "aabfe453-b001-44f2-a13c-b20aa8669aaa":
+                {
+                    "id": "aabfe453-b001-44f2-a13c-b20aa8669aaa",
+                    "name": "technical_test_passed",
+                    "type": "string",
+                    "value": "",
+                    "required": false
+                }
+            },
+            "assignments":
+            {},
+            "templates":
+            {
+                "tasks":
+                {},
+                "default":
+                {}
+            }
+        }
+    }
+}

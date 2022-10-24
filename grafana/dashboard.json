@@ -31,28 +31,57 @@
     {
       "datasource": {
         "type": "postgres",
-        "uid": "SLeOhjSVk"
+        "uid": "${pg_dataSource}"
       },
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 48,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
+          "noValue": "0",
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
-                "color": "#EAB839",
-                "value": 10
-              },
-              {
-                "color": "semi-dark-orange",
-                "value": 20
+                "color": "red",
+                "value": 80
               }
             ]
           }
@@ -60,12 +89,129 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 0,
         "y": 0
       },
-      "id": 6,
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${pg_dataSource}"
+          },
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "assignee"
+              ],
+              "type": "column"
+            }
+          ],
+          "metricColumn": "assignee",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__timeGroupAlias(completed_date,$__interval),\n  assignee AS metric,\n  count(process_definition_version) AS \"process_definition_version\"\nFROM task\nWHERE\n  $__timeFilter(completed_date) AND\n  assignee IN ('hr_user_1','hr_user_2','hr_user_3')\nGROUP BY 1, assignee,2\nORDER BY 1,2",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "process_definition_version"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "process_definition_version"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "task",
+          "timeColumn": "completed_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "assignee",
+                "IN",
+                "('hr_user_1','hr_user_2','hr_user_3')"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "title": "Completed task by HR users",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${pg_dataSource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "super-light-blue",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 7,
       "options": {
         "displayMode": "gradient",
         "minVizHeight": 10,
@@ -85,7 +231,448 @@
         {
           "datasource": {
             "type": "postgres",
-            "uid": "SLeOhjSVk"
+            "uid": "${pg_dataSource}"
+          },
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "1y",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "assignee",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__timeGroupAlias(completed_date,1y),\n  assignee AS metric,\n  count(process_definition_version) AS \"process_definition_version\"\nFROM task\nWHERE\n  $__timeFilter(completed_date) AND\n  status = 'COMPLETED'\nGROUP BY 1,2\nORDER BY 1,2",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "process_definition_version"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "process_definition_version"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "task",
+          "timeColumn": "completed_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "status",
+                "=",
+                "'COMPLETED'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "title": "Completed task by assignee",
+      "transformations": [],
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${pg_dataSource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 47,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 5
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${pg_dataSource}"
+          },
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "status",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__timeGroupAlias(start_date,$__interval),\n  status AS metric,\n  count(process_definition_version) AS \"process_definition_version\"\nFROM process_instance\nWHERE\n  $__timeFilter(start_date) AND\n  status = 'COMPLETED'\nGROUP BY 1,2\nORDER BY 1,2",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "process_definition_version"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "process_definition_version"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "process_instance",
+          "timeColumn": "start_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "status",
+                "=",
+                "'COMPLETED'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "title": "Completed process instances",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${pg_dataSource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 48,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "tech_user_1"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "continuous-BlYlRd"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 7
+      },
+      "id": 9,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${pg_dataSource}"
+          },
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "assignee"
+              ],
+              "type": "column"
+            }
+          ],
+          "metricColumn": "assignee",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__timeGroupAlias(completed_date,$__interval),\n  assignee AS metric,\n  count(process_definition_version) AS \"process_definition_version\"\nFROM task\nWHERE\n  $__timeFilter(completed_date) AND\n  assignee IN ('tech_user_1','tech_user_2')\nGROUP BY 1, assignee,2\nORDER BY 1,2",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "process_definition_version"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "process_definition_version"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "task",
+          "timeColumn": "completed_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "assignee",
+                "IN",
+                "('tech_user_1','tech_user_2')"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "title": "Completed task by TECH users",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${pg_dataSource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 10
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 20
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 12,
+        "x": 12,
+        "y": 11
+      },
+      "id": 6,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "9.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${pg_dataSource}"
           },
           "format": "time_series",
           "group": [
@@ -145,407 +732,14 @@
           ]
         }
       ],
-      "title": "Active task by assignee ",
-      "type": "bargauge"
-    },
-    {
-      "datasource": {
-        "type": "postgres",
-        "uid": "SLeOhjSVk"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 0
-      },
-      "id": 7,
-      "options": {
-        "displayMode": "gradient",
-        "minVizHeight": 10,
-        "minVizWidth": 0,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true
-      },
-      "pluginVersion": "9.2.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "postgres",
-            "uid": "SLeOhjSVk"
-          },
-          "format": "time_series",
-          "group": [
-            {
-              "params": [
-                "1y",
-                "none"
-              ],
-              "type": "time"
-            }
-          ],
-          "metricColumn": "assignee",
-          "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_date,1y),\n  assignee AS metric,\n  count(process_definition_version) AS \"process_definition_version\"\nFROM task\nWHERE\n  $__timeFilter(created_date) AND\n  status = 'COMPLETED'\nGROUP BY 1,2\nORDER BY 1,2",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "process_definition_version"
-                ],
-                "type": "column"
-              },
-              {
-                "params": [
-                  "count"
-                ],
-                "type": "aggregate"
-              },
-              {
-                "params": [
-                  "process_definition_version"
-                ],
-                "type": "alias"
-              }
-            ]
-          ],
-          "table": "task",
-          "timeColumn": "created_date",
-          "timeColumnType": "timestamp",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            },
-            {
-              "datatype": "varchar",
-              "name": "",
-              "params": [
-                "status",
-                "=",
-                "'COMPLETED'"
-              ],
-              "type": "expression"
-            }
-          ]
-        }
-      ],
-      "title": "Completed task by assignee",
+      "title": "Active task by type",
       "transformations": [],
-      "type": "bargauge"
+      "type": "table"
     },
     {
       "datasource": {
         "type": "postgres",
-        "uid": "SLeOhjSVk"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 30,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "smooth",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 10
-              },
-              {
-                "color": "semi-dark-orange",
-                "value": 50
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 8
-      },
-      "id": 8,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "9.2.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "postgres",
-            "uid": "SLeOhjSVk"
-          },
-          "format": "time_series",
-          "group": [
-            {
-              "params": [
-                "$__interval",
-                "none"
-              ],
-              "type": "time"
-            }
-          ],
-          "metricColumn": "name",
-          "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_date,$__interval),\n  name AS metric,\n  count(process_definition_version) AS \"process_definition_version\"\nFROM task\nWHERE\n  $__timeFilter(created_date) AND\n  status = 'CREATED'\nGROUP BY 1,2\nORDER BY 1,2",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "process_definition_version"
-                ],
-                "type": "column"
-              },
-              {
-                "params": [
-                  "count"
-                ],
-                "type": "aggregate"
-              },
-              {
-                "params": [
-                  "process_definition_version"
-                ],
-                "type": "alias"
-              }
-            ]
-          ],
-          "table": "task",
-          "timeColumn": "created_date",
-          "timeColumnType": "timestamp",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            },
-            {
-              "datatype": "varchar",
-              "name": "",
-              "params": [
-                "status",
-                "=",
-                "'CREATED'"
-              ],
-              "type": "expression"
-            }
-          ]
-        }
-      ],
-      "title": "Active task by assignee ",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "postgres",
-        "uid": "SLeOhjSVk"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 47,
-            "gradientMode": "opacity",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 10,
-        "x": 12,
-        "y": 8
-      },
-      "id": 2,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "postgres",
-            "uid": "SLeOhjSVk"
-          },
-          "format": "time_series",
-          "group": [
-            {
-              "params": [
-                "1y",
-                "none"
-              ],
-              "type": "time"
-            }
-          ],
-          "metricColumn": "status",
-          "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(start_date,1y),\n  status AS metric,\n  count(process_definition_version) AS \"process_definition_version\"\nFROM process_instance\nWHERE\n  $__timeFilter(start_date)\nGROUP BY 1,2\nORDER BY 1,2",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "process_definition_version"
-                ],
-                "type": "column"
-              },
-              {
-                "params": [
-                  "count"
-                ],
-                "type": "aggregate"
-              },
-              {
-                "params": [
-                  "process_definition_version"
-                ],
-                "type": "alias"
-              }
-            ]
-          ],
-          "table": "process_instance",
-          "timeColumn": "start_date",
-          "timeColumnType": "timestamp",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "title": "Process instances",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "postgres",
-        "uid": "SLeOhjSVk"
+        "uid": "${pg_dataSource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -576,7 +770,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": false,
+            "spanNulls": true,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -586,29 +780,40 @@
             }
           },
           "mappings": [],
+          "noValue": "0",
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
+                "color": "green"
               }
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hr_manager"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "continuous-BlYlRd"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 16
+        "y": 14
       },
-      "id": 4,
+      "id": 10,
       "options": {
         "legend": {
           "calcs": [],
@@ -626,27 +831,27 @@
         {
           "datasource": {
             "type": "postgres",
-            "uid": "SLeOhjSVk"
+            "uid": "${pg_dataSource}"
           },
           "format": "time_series",
           "group": [
             {
               "params": [
-                "1y",
+                "$__interval",
                 "none"
               ],
               "type": "time"
             },
             {
               "params": [
-                "status"
+                "assignee"
               ],
               "type": "column"
             }
           ],
-          "metricColumn": "status",
+          "metricColumn": "assignee",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_date,1y),\n  status AS metric,\n  count(process_definition_version) AS \"process_definition_version\"\nFROM task\nWHERE\n  $__timeFilter(created_date)\nGROUP BY 1, status,2\nORDER BY 1,2",
+          "rawSql": "SELECT\n  $__timeGroupAlias(completed_date,$__interval),\n  assignee AS metric,\n  count(process_definition_version) AS \"process_definition_version\"\nFROM task\nWHERE\n  $__timeFilter(completed_date) AND\n  assignee IN ('hr_manager')\nGROUP BY 1, assignee,2\nORDER BY 1,2",
           "refId": "A",
           "select": [
             [
@@ -671,18 +876,28 @@
             ]
           ],
           "table": "task",
-          "timeColumn": "created_date",
+          "timeColumn": "completed_date",
           "timeColumnType": "timestamp",
           "where": [
             {
               "name": "$__timeFilter",
               "params": [],
               "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "assignee",
+                "IN",
+                "('hr_manager')"
+              ],
+              "type": "expression"
             }
           ]
         }
       ],
-      "title": "Tasks",
+      "title": "Completed task by HR Manager",
       "transformations": [],
       "type": "timeseries"
     }
@@ -692,10 +907,29 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "PostgreSQL",
+          "value": "PostgreSQL"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "pg_dataSource",
+        "options": [],
+        "query": "postgres",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      }
+    ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},

@@ -77,7 +77,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -198,7 +199,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               }
             ]
           }
@@ -340,7 +342,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -388,7 +391,7 @@
           ],
           "metricColumn": "status",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(start_date,$__interval),\n  status AS metric,\n  count(process_definition_version) AS \"process_definition_version\"\nFROM process_instance\nWHERE\n  $__timeFilter(start_date) AND\n  status = 'COMPLETED'\nGROUP BY 1,2\nORDER BY 1,2",
+          "rawSql": "SELECT\n  $__timeGroupAlias(completed_date,$__interval),\n  status AS metric,\n  count(process_definition_version) AS \"process_definition_version\"\nFROM process_instance\nWHERE\n  $__timeFilter(completed_date) AND\n  status = 'COMPLETED'\nGROUP BY 1,2\nORDER BY 1,2",
           "refId": "A",
           "select": [
             [
@@ -413,7 +416,7 @@
             ]
           ],
           "table": "process_instance",
-          "timeColumn": "start_date",
+          "timeColumn": "completed_date",
           "timeColumnType": "timestamp",
           "where": [
             {
@@ -486,7 +489,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               }
             ]
           }
@@ -622,7 +626,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "#EAB839",
@@ -785,7 +790,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               }
             ]
           }
@@ -936,6 +942,6 @@
   "timezone": "",
   "title": "Activiti Cloud Process Simulator",
   "uid": "lHinv_S4k",
-  "version": 4,
+  "version": 5,
   "weekStart": ""
 }

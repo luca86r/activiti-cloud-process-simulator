@@ -522,7 +522,7 @@ else {
         <TestAction guiclass="TestActionGui" testclass="TestAction" testname="Flow Control Action" enabled="true">
           <intProp name="ActionProcessor.action">1</intProp>
           <intProp name="ActionProcessor.target">0</intProp>
-          <stringProp name="ActionProcessor.duration">${__Random(1000,1000,)}</stringProp>
+          <stringProp name="ActionProcessor.duration">${__Random(700,700,)}</stringProp>
         </TestAction>
         <hashTree/>
         <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
@@ -602,11 +602,11 @@ else {
               <stringProp name="917262930">task_select_position</stringProp>
             </collectionProp>
             <collectionProp name="UserParameters.thread_values">
-              <collectionProp name="10608055">
+              <collectionProp name="700731958">
                 <stringProp name="-307347054">hr_user_1</stringProp>
                 <stringProp name="1216985755">password</stringProp>
                 <stringProp name="51">3</stringProp>
-                <stringProp name="48">0</stringProp>
+                <stringProp name="-1226744968">${__Random(0,2,)}</stringProp>
               </collectionProp>
             </collectionProp>
             <boolProp name="UserParameters.per_iteration">false</boolProp>
@@ -670,11 +670,11 @@ else {
               <stringProp name="917262930">task_select_position</stringProp>
             </collectionProp>
             <collectionProp name="UserParameters.thread_values">
-              <collectionProp name="9535580">
+              <collectionProp name="-1217209437">
                 <stringProp name="-307347053">hr_user_2</stringProp>
                 <stringProp name="1216985755">password</stringProp>
                 <stringProp name="51">3</stringProp>
-                <stringProp name="49">1</stringProp>
+                <stringProp name="-1226744968">${__Random(0,2,)}</stringProp>
               </collectionProp>
             </collectionProp>
             <boolProp name="UserParameters.per_iteration">false</boolProp>
@@ -738,11 +738,11 @@ else {
               <stringProp name="917262930">task_select_position</stringProp>
             </collectionProp>
             <collectionProp name="UserParameters.thread_values">
-              <collectionProp name="8463105">
+              <collectionProp name="-1218281913">
                 <stringProp name="-307347052">hr_user_3</stringProp>
                 <stringProp name="1216985755">password</stringProp>
                 <stringProp name="51">3</stringProp>
-                <stringProp name="50">2</stringProp>
+                <stringProp name="-1226744968">${__Random(0,2,)}</stringProp>
               </collectionProp>
             </collectionProp>
             <boolProp name="UserParameters.per_iteration">false</boolProp>
@@ -806,11 +806,11 @@ else {
               <stringProp name="917262930">task_select_position</stringProp>
             </collectionProp>
             <collectionProp name="UserParameters.thread_values">
-              <collectionProp name="-2118740224">
+              <collectionProp name="949367276">
                 <stringProp name="-769198458">tech_user_1</stringProp>
                 <stringProp name="1216985755">password</stringProp>
                 <stringProp name="50">2</stringProp>
-                <stringProp name="48">0</stringProp>
+                <stringProp name="-1226774759">${__Random(0,1,)}</stringProp>
               </collectionProp>
             </collectionProp>
             <boolProp name="UserParameters.per_iteration">false</boolProp>
@@ -874,11 +874,11 @@ else {
               <stringProp name="917262930">task_select_position</stringProp>
             </collectionProp>
             <collectionProp name="UserParameters.thread_values">
-              <collectionProp name="-2119812662">
+              <collectionProp name="-1327364970">
                 <stringProp name="-769198457">tech_user_2</stringProp>
                 <stringProp name="1216985755">password</stringProp>
                 <stringProp name="50">2</stringProp>
-                <stringProp name="49">1</stringProp>
+                <stringProp name="-1226774759">${__Random(0,1,)}</stringProp>
               </collectionProp>
             </collectionProp>
             <boolProp name="UserParameters.per_iteration">false</boolProp>
@@ -942,7 +942,7 @@ else {
               <stringProp name="917262930">task_select_position</stringProp>
             </collectionProp>
             <collectionProp name="UserParameters.thread_values">
-              <collectionProp name="725465375">
+              <collectionProp name="725550364">
                 <stringProp name="44571000">hr_manager</stringProp>
                 <stringProp name="1216985755">password</stringProp>
                 <stringProp name="49">1</stringProp>

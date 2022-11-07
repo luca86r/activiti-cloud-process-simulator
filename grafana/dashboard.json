@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 2,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -96,6 +96,7 @@
         "y": 0
       },
       "id": 4,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [],
@@ -361,6 +362,7 @@
         "y": 5
       },
       "id": 2,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [],
@@ -519,6 +521,7 @@
         "y": 7
       },
       "id": 9,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [],
@@ -820,6 +823,7 @@
         "y": 14
       },
       "id": 10,
+      "interval": "10s",
       "options": {
         "legend": {
           "calcs": [],
@@ -935,13 +939,13 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Activiti Cloud Process Simulator",
   "uid": "lHinv_S4k",
-  "version": 5,
+  "version": 2,
   "weekStart": ""
 }
